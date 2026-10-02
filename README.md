@@ -11,11 +11,9 @@
 - 工程结构：Gateway统一入口，认证、物品、租借、钱包、消息、管理员服务分离；跨服务通过Feign及消息事件协作。
 - 安全迭代：可信内部凭据、网关身份头清洗、真实Actuator边界回归、管理员歧义路径拒绝、刷新令牌原子消费、钱包更新冲突回滚。
 
-上述为源码包含的能力；完整双用户业务演示、基础设施联通和真实数据库并发验收仍需另外执行，不能由单元测试数量代替。
-
 ## 技术栈与结构
 
-Java17、Spring Boot3.2.9、Spring Cloud/Alibaba、MyBatis-Plus、MySQL、Redis、RabbitMQ、Nacos；两端使用React18、TypeScript、Vite、Vitest和Playwright。框架版本属于当前课设版本，升级风险见[SECURITY.md](SECURITY.md)。
+Java17、Spring Boot3.2.9、Spring Cloud/Alibaba、MyBatis-Plus、MySQL、Redis、RabbitMQ、Nacos；两端使用React18、TypeScript、Vite、Vitest和Playwright。
 
 ```text
 backend/          common + gateway/auth/item/rental/wallet/message/admin
@@ -37,7 +35,7 @@ docs/             架构、API、数据库及验收设计
 3. IDEA导入 `backend/pom.xml`，以JDK17启动六个业务服务，再启动Gateway；Maven方式在 `backend/` 下运行 `mvn spring-boot:run -pl auth-service -DskipTests`，其余模块名替换为item-service、rental-service、wallet-service、message-service、admin-service、gateway。
 4. 两个前端目录分别运行 `npm ci`、`npm run dev`。
 
-数据库初始化示例：在仓库根目录运行 `mysql -h 127.0.0.1 -u root -p < backend/scripts/init.sql`，密码使用交互输入。初始管理员 `admin / 123456` 是公开演示账号，不是真实私密账号；对外展示必须更换，不能沿用到实际服务。
+数据库初始化示例：在仓库根目录运行 `mysql -h 127.0.0.1 -u root -p < backend/scripts/init.sql`，密码使用交互输入
 
 业务服务监听与Nacos注册地址默认loopback。跨机部署需同时配置 `SR_SERVICE_BIND_ADDRESS`、`SR_SERVICE_ADVERTISED_IP`，并配置网络访问控制；不要只把业务端口直接暴露到公网。
 
@@ -51,8 +49,4 @@ GitHub push/PR只运行已提交内容与全部可达历史的敏感内容检查
 
 ## 已知限制与发布范围
 
-重复退款/库存幂等、物品审核状态机、会话即时撤销、WebSocket到期清理、私聊附件授权、上传格式及像素限制、依赖升级仍需完善，详见[安全说明](SECURITY.md)。这些限制不影响展示源码，但不能据此宣称系统已具备生产安全保障。
-
-此仓库从经清理的当前源码建立独立历史；不包含原项目历史、真实配置、数据库备份、上传文件、原始课设Word或未经隐私复核的截图。原完整工程由作者另行保存。
-
-开源许可证尚未选择。本仓库先用于公开展示源码；第三方依赖及原项目资料的来源仍需保留并分别核查。
+重复退款/库存幂等、物品审核状态机、会话即时撤销、WebSocket到期清理、私聊附件授权、上传格式及像素限制、依赖升级仍需完善，详见[安全说明](SECURITY.md)。
