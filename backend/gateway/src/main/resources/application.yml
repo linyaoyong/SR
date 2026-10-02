@@ -1,0 +1,86 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: gateway
+  config:
+    import: optional:nacos:${spring.application.name}.yaml?group=DEFAULT_GROUP
+  codec:
+    max-in-memory-size: 60MB
+  cloud:
+    nacos:
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        file-extension: yaml
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+    sentinel:
+      transport:
+        dashboard: ${SENTINEL_DASHBOARD_ADDR:127.0.0.1:8089}
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            exposedHeaders:
+              - X-User-Id
+              - X-User-Role
+            allowCredentials: true
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          order: -20
+          predicates:
+            - Path=/api/auth/**,/api/users/**,/api/files/avatars,/api/files/avatars/**,/files/avatars/**
+        - id: wallet-payment-routes
+          uri: lb://wallet-service
+          order: -15
+          predicates:
+            - Path=/api/wallet/**,/api/rentals/applications/*/payments/**,/api/orders/*/payments/**
+        - id: item-service
+          uri: lb://item-service
+          order: -10
+          predicates:
+            - Path=/api/categories/**,/api/items/**,/api/favorites/**,/api/files/items,/api/files/items/**,/files/items/**
+        - id: rental-service
+          uri: lb://rental-service
+          order: 0
+          predicates:
+            - Path=/api/rentals/**,/api/orders/**,/files/reviews/**
+        - id: message-service
+          uri: lb://message-service
+          order: 0
+          predicates:
+            - Path=/api/messages/**,/ws/**,/files/messages/**
+        - id: admin-service
+          uri: lb://admin-service
+          order: 0
+          predicates:
+            - Path=/api/admin/**
+
+sr:
+  security:
+    jwt-secret: ${SR_JWT_SECRET}
+    internal-token: ${SR_INTERNAL_TOKEN}
+
+sentinel:
+  item-list:
+    qps: 20
+rental:
+  application:
+    qps: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway

@@ -1,0 +1,15 @@
+title = "SR: default rules plus low-entropy database defaults"
+[extend]
+useDefault = true
+
+[[rules]]
+id = "sr-database-default"
+description = "Database password fallback must not contain a credential"
+regex = '''\$\{MYSQL_PASSWORD:(?:-)?([A-Za-z0-9@!#%_+.-]{4,})\}'''
+secretGroup = 1
+
+[[rules]]
+id = "sr-jdbc-password-literal"
+description = "Literal database password in runbooks/scripts"
+regex = '''(?i)(?:MYSQL_PWD=|--password=)([A-Za-z0-9@!#%_+.-]{4,})'''
+secretGroup = 1

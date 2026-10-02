@@ -1,0 +1,52 @@
+server:
+  port: 8081
+  address: ${SR_SERVICE_BIND_ADDRESS:127.0.0.1}
+
+spring:
+  application:
+    name: auth-service
+  config:
+    import: optional:nacos:${spring.application.name}.yaml?group=DEFAULT_GROUP
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 60MB
+  cloud:
+    nacos:
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        file-extension: yaml
+      discovery:
+        ip: ${SR_SERVICE_ADVERTISED_IP:127.0.0.1}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      database: 0
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/sr_auth?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+sr:
+  security:
+    jwt-secret: ${SR_JWT_SECRET}
+    internal-token: ${SR_INTERNAL_TOKEN}

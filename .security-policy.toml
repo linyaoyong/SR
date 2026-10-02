@@ -1,0 +1,37 @@
+# Each exception matches rule + relative file + entire trimmed source line.
+# A new or changed credential on the same file is not suppressed.
+[[deepsec]]
+file = "backend/common/src/main/java/com/share/rental/common/feign/InternalTokenInterceptor.java"
+rule = "hardcoded_secret_assignment"
+line = 'public static final String INTERNAL_TOKEN_HEADER = "X-Internal-Token";'
+reason = "HTTP header name, not an authentication credential"
+
+[[deepsec]]
+file = "backend/common/src/main/java/com/share/rental/common/redis/RedisKey.java"
+rule = "hardcoded_secret_assignment"
+line = 'public static final String REFRESH_TOKEN = "sr:auth:refresh:";'
+reason = "Redis key prefix, not an authentication credential"
+
+[[deepsec]]
+file = "scripts/security_check.py"
+rule = "hardcoded_secret_assignment"
+line = "SPRING_DATASOURCE_PASSWORD='audit-unused-dummy',"
+reason = "Synthetic audit-only password; isolated datasource port, never used for application login"
+
+[[deepsec]]
+file = "scripts/security_check.py"
+rule = "hardcoded_secret_high_entropy_assignment"
+line = "SR_JWT_SECRET='audit-only-jwt-secret-at-least-32-bytes-long',"
+reason = "Synthetic audit-only JWT configuration passed only to isolated scanner/test subprocesses"
+
+[[deepsec]]
+file = "scripts/security_check.py"
+rule = "hardcoded_secret_assignment"
+line = "SR_INTERNAL_TOKEN='audit-only-internal-transport-token')"
+reason = "Synthetic audit-only internal credential; never a runtime default or production secret"
+
+[[deepsec]]
+file = "scripts/security_check.py"
+rule = "sast_command_injection_os_system"
+line = "result = subprocess.run(command, cwd=cwd, env=env, stdout=log,"
+reason = "Fixed scanner/test command argv, shell=False default, no network/request input; executable overrides are trusted local operator choices"

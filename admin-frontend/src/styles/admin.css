@@ -1,0 +1,354 @@
+/* 邻享后台 - 通用样式与设计令牌 */
+:root {
+  /* 主色 */
+  --admin-color-primary: #2563eb;
+  --admin-color-primary-hover: #1d4ed8;
+  --admin-color-primary-soft: #dbeafe;
+  --admin-color-success: #16a34a;
+  --admin-color-success-soft: #dcfce7;
+  --admin-color-warning: #d97706;
+  --admin-color-warning-soft: #fef3c7;
+  --admin-color-error: #dc2626;
+  --admin-color-error-soft: #fee2e2;
+  --admin-color-info: #2563eb;
+  --admin-color-info-soft: #dbeafe;
+
+  /* 中性色 */
+  --admin-color-text: #1f2937;
+  --admin-color-text-secondary: #4b5563;
+  --admin-color-text-muted: #6b7280;
+  --admin-color-border: #e5e7eb;
+  --admin-color-border-strong: #d1d5db;
+  --admin-color-bg: #f5f7fa;
+  --admin-color-bg-elevated: #ffffff;
+  --admin-color-bg-soft: #f9fafb;
+
+  /* 半径与间距 */
+  --admin-radius-sm: 4px;
+  --admin-radius: 6px;
+  --admin-radius-lg: 8px;
+  --admin-space-1: 4px;
+  --admin-space-2: 8px;
+  --admin-space-3: 12px;
+  --admin-space-4: 16px;
+  --admin-space-5: 24px;
+  --admin-space-6: 32px;
+
+  /* 阴影 */
+  --admin-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --admin-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --admin-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+
+  /* 字体 */
+  --admin-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  --admin-font-size-sm: 12px;
+  --admin-font-size: 14px;
+  --admin-font-size-lg: 16px;
+  --admin-font-size-xl: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--admin-font-family);
+  font-size: var(--admin-font-size);
+  color: var(--admin-color-text);
+  background-color: var(--admin-color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 整体布局 */
+.admin-shell {
+  min-height: 100vh;
+}
+
+/* 侧边栏 */
+.admin-sidebar {
+  background-color: var(--admin-color-bg-elevated) !important;
+  border-right: 1px solid var(--admin-color-border);
+  padding: var(--admin-space-5) 0;
+}
+
+.admin-sidebar .ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+  gap: var(--admin-space-5);
+}
+
+/* 品牌区 */
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--admin-space-2);
+  padding: 0 var(--admin-space-4);
+}
+
+.admin-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--admin-radius);
+  background-color: var(--admin-color-primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: var(--admin-font-size-lg);
+}
+
+.admin-brand-text {
+  font-size: var(--admin-font-size-lg);
+  font-weight: 600;
+  color: var(--admin-color-text);
+}
+
+/* 导航 */
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 var(--admin-space-2);
+}
+
+.admin-nav-item {
+  display: block;
+  padding: var(--admin-space-2) var(--admin-space-3);
+  border-radius: var(--admin-radius);
+  color: var(--admin-color-text-secondary);
+  font-size: var(--admin-font-size);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  user-select: none;
+}
+
+.admin-table-ellipsis {
+  display: inline-block;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.admin-nav-item:hover {
+  background-color: var(--admin-color-bg-soft);
+  color: var(--admin-color-text);
+}
+
+.admin-nav-item.is-active {
+  background-color: var(--admin-color-primary-soft);
+  color: var(--admin-color-primary);
+  font-weight: 600;
+}
+
+/* 主页面 */
+.admin-page {
+  padding: var(--admin-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--admin-space-5);
+}
+
+.admin-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--admin-space-4);
+  flex-wrap: wrap;
+}
+
+.admin-title {
+  margin: 0;
+  font-size: var(--admin-font-size-xl);
+  font-weight: 600;
+  color: var(--admin-color-text);
+  line-height: 1.4;
+}
+
+.admin-text {
+  margin: 0;
+  color: var(--admin-color-text);
+  font-size: var(--admin-font-size);
+}
+
+.admin-caption {
+  margin: 4px 0 0;
+  color: var(--admin-color-text-muted);
+  font-size: var(--admin-font-size-sm);
+}
+
+/* 面板 */
+.admin-panel {
+  background-color: var(--admin-color-bg-elevated);
+  border: 1px solid var(--admin-color-border);
+  border-radius: var(--admin-radius-lg);
+  padding: var(--admin-space-5);
+  box-shadow: var(--admin-shadow-sm);
+}
+
+/* 按钮（与 antd 配合使用的辅助类） */
+.admin-btn-primary,
+.admin-btn-secondary,
+.admin-btn-danger {
+  border-radius: var(--admin-radius) !important;
+  font-weight: 500;
+}
+
+.admin-btn-primary {
+  background-color: var(--admin-color-primary) !important;
+  border-color: var(--admin-color-primary) !important;
+  color: #ffffff !important;
+}
+
+.admin-btn-primary:hover {
+  background-color: var(--admin-color-primary-hover) !important;
+  border-color: var(--admin-color-primary-hover) !important;
+}
+
+.admin-btn-secondary {
+  background-color: var(--admin-color-bg-elevated) !important;
+  border-color: var(--admin-color-border-strong) !important;
+  color: var(--admin-color-text) !important;
+}
+
+.admin-btn-secondary:hover {
+  border-color: var(--admin-color-primary) !important;
+  color: var(--admin-color-primary) !important;
+}
+
+.admin-btn-danger {
+  background-color: var(--admin-color-error) !important;
+  border-color: var(--admin-color-error) !important;
+  color: #ffffff !important;
+}
+
+/* 徽标 */
+.admin-badge--success {
+  color: var(--admin-color-success);
+  background-color: var(--admin-color-success-soft);
+}
+
+.admin-badge--warning {
+  color: var(--admin-color-warning);
+  background-color: var(--admin-color-warning-soft);
+}
+
+.admin-badge--error {
+  color: var(--admin-color-error);
+  background-color: var(--admin-color-error-soft);
+}
+
+.admin-badge--info {
+  color: var(--admin-color-info);
+  background-color: var(--admin-color-info-soft);
+}
+
+.admin-badge--muted {
+  color: var(--admin-color-text-muted);
+  background-color: var(--admin-color-bg-soft);
+  border: 1px solid var(--admin-color-border);
+}
+
+/* 徽标通用基础样式：内联圆角小块 */
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--admin-radius-sm);
+  font-size: var(--admin-font-size-sm);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* 空态 */
+.admin-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--admin-space-6) 0;
+  text-align: center;
+  gap: var(--admin-space-2);
+  color: var(--admin-color-text-muted);
+}
+
+/* 提示框 */
+.admin-alert--info,
+.admin-alert--success,
+.admin-alert--warning,
+.admin-alert--error {
+  padding: var(--admin-space-3) var(--admin-space-4);
+  border-radius: var(--admin-radius);
+  border: 1px solid transparent;
+  font-size: var(--admin-font-size);
+}
+
+.admin-alert--info {
+  background-color: var(--admin-color-info-soft);
+  border-color: var(--admin-color-info);
+  color: var(--admin-color-info);
+}
+
+.admin-alert--success {
+  background-color: var(--admin-color-success-soft);
+  border-color: var(--admin-color-success);
+  color: var(--admin-color-success);
+}
+
+.admin-alert--warning {
+  background-color: var(--admin-color-warning-soft);
+  border-color: var(--admin-color-warning);
+  color: var(--admin-color-warning);
+}
+
+.admin-alert--error {
+  background-color: var(--admin-color-error-soft);
+  border-color: var(--admin-color-error);
+  color: var(--admin-color-error);
+}
+
+/* 登录页 */
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--admin-space-5);
+  background-color: var(--admin-color-bg);
+}
+
+.admin-login-panel {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--admin-space-5);
+}
+
+.admin-login-header {
+  display: flex;
+  align-items: center;
+  gap: var(--admin-space-3);
+}
+
+.admin-login-header .admin-title {
+  font-size: var(--admin-font-size-xl);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.admin-login .ant-form-item {
+  margin-bottom: var(--admin-space-4);
+}

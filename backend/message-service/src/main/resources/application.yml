@@ -1,0 +1,57 @@
+server:
+  port: 8085
+  address: ${SR_SERVICE_BIND_ADDRESS:127.0.0.1}
+
+spring:
+  application:
+    name: message-service
+  config:
+    import: optional:nacos:${spring.application.name}.yaml?group=DEFAULT_GROUP
+  cloud:
+    nacos:
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        file-extension: yaml
+      discovery:
+        ip: ${SR_SERVICE_ADVERTISED_IP:127.0.0.1}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+  rabbitmq:
+    host: ${RABBITMQ_HOST:127.0.0.1}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/sr_message?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      database: 0
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+message:
+  websocket:
+    online-ttl-seconds: 300
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+sr:
+  security:
+    jwt-secret: ${SR_JWT_SECRET}
+    internal-token: ${SR_INTERNAL_TOKEN}
